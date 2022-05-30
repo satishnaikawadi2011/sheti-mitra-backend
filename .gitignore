@@ -1,1 +1,14 @@
 index.txt
+notebooks/.ipynb_checkpoints/
+.vscode/
+__pycache__/
+app/venv/.Python
+app/venv/[Bb]in
+app/venv/[Ii]nclude
+app/venv/[Ll]ib
+app/venv/[Ll]ib64
+app/venv/[Ll]ocal
+app/venv/[Ss]cripts
+app/venv/pyvenv.cfg
+app/venv/.venv
+app/venv/pip-selfcheck.json
