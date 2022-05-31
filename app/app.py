@@ -2,6 +2,7 @@ from flask import Flask,request,Response, jsonify
 import numpy as np
 import pandas as pd
 import pickle
+from flask_cors import CORS
 
 
 from utils.validate_inputs import validate_recommend_crop_inputs
@@ -22,6 +23,7 @@ crop_cat_codes = df_crop_map['code']
 
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def home():
