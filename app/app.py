@@ -13,6 +13,12 @@ crop_recommendation_model = pickle.load(
     open(crop_recommendation_model_path, 'rb'))
 
 
+# Loading crop name and category code mapping dataset
+
+crop_map_path = 'data/crop_name_code_mapping.csv'
+df_crop_map = pd.read_csv(crop_map_path)
+crop_names = df_crop_map['name']
+crop_cat_codes = df_crop_map['code']
 
 
 app = Flask(__name__)
@@ -25,7 +31,6 @@ def home():
 def recommend_crop():
     request_data = request.get_json();
     validation_res = validate_recommend_crop_inputs(request_data)
-    print(validation_res)
     if(validation_res['is_valid']==False):
         return Response(validation_res['message'],status=400,mimetype='application/json')
 
@@ -41,7 +46,9 @@ def recommend_crop():
     data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
     prediction = crop_recommendation_model.predict(data)
     res = int(prediction[0])
-    return jsonify({'crop':res})
+    index = df_crop_map[crop_cat_codes == res].index[0]
+    crop_name = crop_names[index]
+    return jsonify({'crop':crop_name})
 
 
 if __name__ == '__main__':
